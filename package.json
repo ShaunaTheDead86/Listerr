@@ -3,9 +3,14 @@
 	"version": "1.0.0",
 	"description": "An automated playlist maker for Jellyfin using Deezer's API",
 	"main": "index.js",
+	"type": "module",
 	"scripts": {
 		"test": "echo \"Error: no test specified\" && exit 1"
 	},
 	"author": "Shauna Empringham",
-	"license": "ISC"
+	"license": "ISC",
+	"dependencies": {
+		"bottleneck": "^2.19.5",
+		"deezer-web-api": "^1.7.2"
+	}
 }
