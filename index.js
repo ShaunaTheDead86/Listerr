@@ -15,5 +15,6 @@ const limiter = new Bottleneck({
 const alt_api_url = 'https://ws.audioscrobbler.com/2.0/';
 const api_url = 'https://www.last.fm/api/';
 
-const session = await getSession();
-console.log(session);
+const { api_key, api_sig, session_key } = await getSession();
+
+console.log(api_key, api_sig, session_key);
