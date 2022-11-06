@@ -1,7 +1,7 @@
 {
 	"name": "listerr",
 	"version": "1.0.0",
-	"description": "An automated playlist maker for Jellyfin using Deezer's API",
+	"description": "An automated playlist maker for Jellyfin using Last.fm's API",
 	"main": "index.js",
 	"type": "module",
 	"scripts": {
@@ -11,6 +11,9 @@
 	"license": "ISC",
 	"dependencies": {
 		"bottleneck": "^2.19.5",
-		"deezer-web-api": "^1.7.2"
+		"deezer-web-api": "^1.7.2",
+		"md5": "^2.3.0",
+		"node-fetch": "^3.2.10",
+		"prompts": "^2.4.2"
 	}
 }
