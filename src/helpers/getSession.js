@@ -35,18 +35,21 @@ export default async function getSession() {
 		`api_key${api_key}methodauth.getSessiontoken${token}${secret}`
 	);
 
-	const session_key = (
+	const session = (
 		await (
 			await fetch(
 				`${alt_api_url}?method=auth.getSession&api_key=${api_key}&token=${token}&format=json&api_sig=${api_sig}`
 			)
 		).json()
-	).session.key;
+	).session;
+
+	console.log(session);
 
 	const session_data = {
 		api_key,
 		api_sig,
-		session_key,
+		session_key: session.key,
+		user_name: session.name,
 	};
 
 	fs.writeFileSync('./session.json', JSON.stringify(session_data));

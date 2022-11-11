@@ -1,19 +1,54 @@
 {
 	"name": "listerr",
-	"version": "1.0.0",
-	"description": "An automated playlist maker for Jellyfin using Last.fm's API",
-	"main": "index.js",
-	"type": "module",
-	"scripts": {
-		"test": "echo \"Error: no test specified\" && exit 1"
-	},
-	"author": "Shauna Empringham",
-	"license": "ISC",
+	"version": "0.1.0",
+	"private": true,
 	"dependencies": {
+		"@testing-library/jest-dom": "^5.16.5",
+		"@testing-library/react": "^13.4.0",
+		"@testing-library/user-event": "^13.5.0",
+		"axios": "^1.1.3",
 		"bottleneck": "^2.19.5",
+		"cookie-parser": "^1.4.6",
+		"cors": "^2.8.5",
 		"deezer-web-api": "^1.7.2",
+		"express": "^4.18.2",
+		"fetch": "^1.1.0",
 		"md5": "^2.3.0",
-		"node-fetch": "^3.2.10",
-		"prompts": "^2.4.2"
+		"node-fetch": "^3.3.0",
+		"oauth": "^0.10.0",
+		"open": "^8.4.0",
+		"prompts": "^2.4.2",
+		"query-string": "^7.1.1",
+		"querystring": "^0.2.1",
+		"react": "^18.2.0",
+		"react-dom": "^18.2.0",
+		"react-router-dom": "^6.4.3",
+		"react-scripts": "5.0.1",
+		"request": "^2.88.2",
+		"web-vitals": "^2.1.4"
+	},
+	"scripts": {
+		"start": "react-scripts start",
+		"build": "react-scripts build",
+		"test": "react-scripts test",
+		"eject": "react-scripts eject"
+	},
+	"eslintConfig": {
+		"extends": [
+			"react-app",
+			"react-app/jest"
+		]
+	},
+	"browserslist": {
+		"production": [
+			">0.2%",
+			"not dead",
+			"not op_mini all"
+		],
+		"development": [
+			"last 1 chrome version",
+			"last 1 firefox version",
+			"last 1 safari version"
+		]
 	}
 }
