@@ -1,6 +1,7 @@
 import './App.css';
 import { useEffect, useState } from 'react';
 import helpers from './helpers/helpers.js';
+import spotifyApi from './helpers/spotifyApi.js';
 
 export default function App() {
 	const CLIENT_ID = '96ddc86f439d4681a6f3a95fe5ca9b19';
@@ -13,13 +14,14 @@ export default function App() {
 	const [state, setState] = useState({
 		set: (key, value) => setState((prev) => ({ ...prev, [key]: value })),
 		helpers,
+		spotifyApi,
 		token: '',
 		searchKey: '',
 		artists: [],
 	});
 
 	useEffect(() => {
-		state.helpers.login(state);
+		state.spotifyApi.login(state);
 		// eslint-disable-next-line
 	}, []);
 
@@ -35,7 +37,7 @@ export default function App() {
 					Login to Spotify
 				</a>
 			) : (
-				<button onClick={() => state.helpers.logout(state)}>Logout</button>
+				<button onClick={() => state.spotifyApi.logout(state)}>Logout</button>
 			)}
 			<br />
 			<br />
