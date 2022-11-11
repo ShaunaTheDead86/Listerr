@@ -1,24 +1,22 @@
-import axios from 'axios';
-
 const helpers = {
 	addSpaces: (num) => {
 		num--;
 		return <br /> + num > 0 ? this.addSpaces(num) : '';
 	},
-	renderArtists: (artists) => {
-		console.log('renderArtists: ', artists);
-		return artists.map((artist) => (
-			<div key={artist.id}>
+	renderSearchResults: (searchResults) => {
+		console.log('renderArtists: ', searchResults);
+		return searchResults.map((result) => (
+			<div key={result.id}>
 				<br />
 				<br />
-				{artist.images.length ? (
-					<img width={'100px'} src={artist.images[0].url} alt="" />
+				{result.images.length ? (
+					<img width={'100px'} src={result.images[0].url} alt="" />
 				) : (
 					<div>No Image</div>
 				)}
 				<br />
 				<br />
-				{artist.name}
+				{result.name}
 				<br />
 			</div>
 		));

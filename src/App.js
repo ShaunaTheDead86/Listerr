@@ -14,14 +14,15 @@ export default function App() {
 	const [state, setState] = useState({
 		set: (key, value) => setState((prev) => ({ ...prev, [key]: value })),
 		helpers,
-		spotifyApi,
 		token: '',
 		searchKey: '',
-		artists: [],
+		searchResults: undefined,
 	});
 
+	const spotify = spotifyApi(state);
+
 	useEffect(() => {
-		state.spotifyApi.login(state);
+		spotify.login(state);
 		// eslint-disable-next-line
 	}, []);
 
@@ -37,14 +38,22 @@ export default function App() {
 					Login to Spotify
 				</a>
 			) : (
-				<button onClick={() => state.spotifyApi.logout(state)}>Logout</button>
+				<button onClick={() => spotify.logout(state)}>Logout</button>
 			)}
 			<br />
 			<br />
 			<div>Search Artists: </div>
 			<div>
 				<form
-					onSubmit={async (e) => await state.helpers.searchArtists(state, e)}
+					onSubmit={async (e) => {
+						e.preventDefault();
+						const searchResults = await spotify.api.search({
+							q: state.searchKey,
+							type: 'artist',
+						});
+						console.log('searchResults: ', searchResults);
+						state.set('searchResults', searchResults);
+					}}
 				>
 					<input
 						type="text"
@@ -52,7 +61,8 @@ export default function App() {
 					/>
 					<button type={'submit'}>Search</button>
 				</form>
-				{state.artists.length > 0 && state.helpers.renderArtists(state.artists)}
+				{state.searchResults &&
+					state.helpers.renderSearchResults(state.searchResults)}
 			</div>
 		</div>
 	);
