@@ -2,11 +2,12 @@ import './App.css';
 import { useEffect, useState } from 'react';
 import helpers from './helpers/helpers.js';
 import spotifyApi from './helpers/spotifyApi.js';
+import dotenv from 'dotenv';
+dotenv.config({
+	path: '../.env',
+});
 
 export default function App() {
-	const CLIENT_ID = '96ddc86f439d4681a6f3a95fe5ca9b19';
-	// eslint-disable-next-line
-	const CLIENT_SECRET = '557d9b3be23e4a3a84c054d8020f9393';
 	const REDIRECT_URI = 'http://localhost:3000';
 	const AUTH_ENDPOINT = 'https://accounts.spotify.com/authorize';
 	const RESPONSE_TYPE = 'token';
@@ -33,7 +34,7 @@ export default function App() {
 			<h1>Spotify React</h1>
 			{!state.token ? (
 				<a
-					href={`${AUTH_ENDPOINT}?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&response_type=${RESPONSE_TYPE}`}
+					href={`${AUTH_ENDPOINT}?client_id=${process.env.CLIENT_ID}&redirect_uri=${REDIRECT_URI}&response_type=${RESPONSE_TYPE}`}
 				>
 					Login to Spotify
 				</a>
