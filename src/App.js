@@ -1,70 +1,49 @@
-import './App.css';
 import { useEffect, useState } from 'react';
-import helpers from './helpers/helpers.js';
-import spotifyApi from './helpers/spotifyApi.js';
-import dotenv from 'dotenv';
-dotenv.config({
-	path: '../.env',
-});
+import { spotifyAuth, searchForm } from './components';
+import { spotify, helpers } from './helpers';
+import './App.css';
 
 export default function App() {
-	const REDIRECT_URI = 'http://localhost:3000';
-	const AUTH_ENDPOINT = 'https://accounts.spotify.com/authorize';
-	const RESPONSE_TYPE = 'token';
-
 	const [state, setState] = useState({
 		set: (key, value) => setState((prev) => ({ ...prev, [key]: value })),
+		CLIENT_SECRET: process.env.REACT_APP_SPOTIFY_CLIENT_SECRET,
+		CLIENT_ID: process.env.REACT_APP_SPOTIFY_CLIENT_ID,
 		helpers,
-		token: '',
 		searchKey: '',
-		searchResults: undefined,
+		searchResults: '',
+		spotify: undefined,
+		token: undefined,
+		search: {
+			limit: 100,
+			seed_artists: [],
+			seed_genres: [],
+			seed_tracks: [],
+			type: 'artist',
+			input: '',
+		},
 	});
 
-	const spotify = spotifyApi(state);
-
 	useEffect(() => {
-		spotify.login(state);
+		state.set('spotify', spotify());
 		// eslint-disable-next-line
 	}, []);
 
-	// console.log('before render: ', state);
+	useEffect(() => {
+		if (state.spotify) state.spotify.login(state);
+		// eslint-disable-next-line
+	}, [state.spotify]);
+
+	// console.log('state before render: ', state);
 
 	return (
 		<div className="App">
-			<h1>Spotify React</h1>
-			{!state.token ? (
-				<a
-					href={`${AUTH_ENDPOINT}?client_id=${process.env.CLIENT_ID}&redirect_uri=${REDIRECT_URI}&response_type=${RESPONSE_TYPE}`}
-				>
-					Login to Spotify
-				</a>
-			) : (
-				<button onClick={() => spotify.logout(state)}>Logout</button>
-			)}
 			<br />
 			<br />
-			<div>Search Artists: </div>
-			<div>
-				<form
-					onSubmit={async (e) => {
-						e.preventDefault();
-						const searchResults = await spotify.api.search({
-							q: state.searchKey,
-							type: 'artist',
-						});
-						console.log('searchResults: ', searchResults);
-						state.set('searchResults', searchResults);
-					}}
-				>
-					<input
-						type="text"
-						onChange={(e) => state.set('searchKey', e.target.value)}
-					/>
-					<button type={'submit'}>Search</button>
-				</form>
-				{state.searchResults &&
-					state.helpers.renderSearchResults(state.searchResults)}
-			</div>
+			{spotifyAuth(state)}
+			<br />
+			<br />
+			{state.token && searchForm(state)}
+			<br />
 		</div>
 	);
 }
